@@ -1,2 +1,2 @@
 # Mental_Health_bot
-AlgoArena
+Made for AlgoArena Online
