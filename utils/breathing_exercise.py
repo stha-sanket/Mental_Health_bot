@@ -5,7 +5,6 @@ def breathing_exercise():
     """
     Display and guide the user through a 4-4-4 breathing exercise.
     """
-    st.title("🧘 Breathing Exercise")
     
     st.markdown("""
     ## 4-4-4 Breathing Technique
@@ -24,93 +23,106 @@ def breathing_exercise():
     
     # Container for the exercise visualization
     exercise_container = st.empty()
+
+    # Initialize session state if not already initialized
+    if "exercise_done" not in st.session_state:
+        st.session_state.exercise_done = False
+        st.session_state.rounds_completed = 0
     
     # Button to start exercise
-    if st.button("Start Breathing Exercise"):
-        with st.spinner("Preparing exercise..."):
-            # Countdown to start
-            for i in range(3, 0, -1):
+    if not st.session_state.exercise_done:
+        if st.button("Start Breathing Exercise"):
+            with st.spinner("Preparing exercise..."):
+                # Countdown to start
+                for i in range(3, 0, -1):
+                    exercise_container.markdown(f"""
+                    <div style="text-align: center; margin-top: 50px;">
+                        <h1>Starting in {i}...</h1>
+                    </div>
+                    """, unsafe_allow_html=True)
+                    time.sleep(1)
+                
+                # Run the breathing exercise for the selected number of rounds
+                for round in range(1, rounds + 1):
+                    # Breathe in
+                    for i in range(4, 0, -1):
+                        progress = (5 - i) / 4
+                        size = 100 + (100 * progress)  # Circle grows from 100px to 200px
+                        exercise_container.markdown(f"""
+                        <div style="text-align: center; margin-top: 50px;">
+                            <h2>Round {round}/{rounds}</h2>
+                            <h1>Breathe In</h1>
+                            <h2>{i}</h2>
+                            <div style="background-color: rgba(142, 202, 230, {progress}); 
+                                        border-radius: 50%; 
+                                        width: {size}px; 
+                                        height: {size}px; 
+                                        margin: 30px auto;"></div>
+                        </div>
+                        """, unsafe_allow_html=True)
+                        time.sleep(1)
+                    
+                    # Hold breath
+                    for i in range(4, 0, -1):
+                        exercise_container.markdown(f"""
+                        <div style="text-align: center; margin-top: 50px;">
+                            <h2>Round {round}/{rounds}</h2>
+                            <h1>Hold</h1>
+                            <h2>{i}</h2>
+                            <div style="background-color: rgba(142, 202, 230, 1); 
+                                        border-radius: 50%; 
+                                        width: 200px; 
+                                        height: 200px; 
+                                        margin: 30px auto;"></div>
+                        </div>
+                        """, unsafe_allow_html=True)
+                        time.sleep(1)
+                    
+                    # Breathe out
+                    for i in range(4, 0, -1):
+                        progress = i / 4
+                        size = 100 + (100 * progress)  # Circle shrinks from 200px to 100px
+                        exercise_container.markdown(f"""
+                        <div style="text-align: center; margin-top: 50px;">
+                            <h2>Round {round}/{rounds}</h2>
+                            <h1>Breathe Out</h1>
+                            <h2>{i}</h2>
+                            <div style="background-color: rgba(142, 202, 230, {progress}); 
+                                        border-radius: 50%; 
+                                        width: {size}px; 
+                                        height: {size}px; 
+                                        margin: 30px auto;"></div>
+                        </div>
+                        """, unsafe_allow_html=True)
+                        time.sleep(1)
+                
+                # Mark exercise as done
+                st.session_state.exercise_done = True
+                st.session_state.rounds_completed = rounds
                 exercise_container.markdown(f"""
                 <div style="text-align: center; margin-top: 50px;">
-                    <h1>Starting in {i}...</h1>
+                    <h1>Exercise Complete</h1>
+                    <p style="font-size: 18px;">How do you feel?</p>
                 </div>
                 """, unsafe_allow_html=True)
-                time.sleep(1)
-            
-            # Run the breathing exercise for the selected number of rounds
-            for round in range(1, rounds + 1):
-                # Breathe in
-                for i in range(4, 0, -1):
-                    progress = (5 - i) / 4
-                    size = 100 + (100 * progress)  # Circle grows from 100px to 200px
-                    exercise_container.markdown(f"""
-                    <div style="text-align: center; margin-top: 50px;">
-                        <h2>Round {round}/{rounds}</h2>
-                        <h1>Breathe In</h1>
-                        <h2>{i}</h2>
-                        <div style="background-color: rgba(142, 202, 230, {progress}); 
-                                    border-radius: 50%; 
-                                    width: {size}px; 
-                                    height: {size}px; 
-                                    margin: 30px auto;"></div>
-                    </div>
-                    """, unsafe_allow_html=True)
-                    time.sleep(1)
-                
-                # Hold breath
-                for i in range(4, 0, -1):
-                    exercise_container.markdown(f"""
-                    <div style="text-align: center; margin-top: 50px;">
-                        <h2>Round {round}/{rounds}</h2>
-                        <h1>Hold</h1>
-                        <h2>{i}</h2>
-                        <div style="background-color: rgba(142, 202, 230, 1); 
-                                    border-radius: 50%; 
-                                    width: 200px; 
-                                    height: 200px; 
-                                    margin: 30px auto;"></div>
-                    </div>
-                    """, unsafe_allow_html=True)
-                    time.sleep(1)
-                
-                # Breathe out
-                for i in range(4, 0, -1):
-                    progress = i / 4
-                    size = 100 + (100 * progress)  # Circle shrinks from 200px to 100px
-                    exercise_container.markdown(f"""
-                    <div style="text-align: center; margin-top: 50px;">
-                        <h2>Round {round}/{rounds}</h2>
-                        <h1>Breathe Out</h1>
-                        <h2>{i}</h2>
-                        <div style="background-color: rgba(142, 202, 230, {progress}); 
-                                    border-radius: 50%; 
-                                    width: {size}px; 
-                                    height: {size}px; 
-                                    margin: 30px auto;"></div>
-                    </div>
-                    """, unsafe_allow_html=True)
-                    time.sleep(1)
-            
-            # Exercise complete
-            exercise_container.markdown(f"""
-            <div style="text-align: center; margin-top: 50px;">
-                <h1>Exercise Complete</h1>
-                <p style="font-size: 18px;">How do you feel?</p>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            # Provide options for how they feel after the exercise
-            col1, col2, col3 = st.columns(3)
-            with col1:
-                if st.button("I feel more relaxed"):
-                    st.success("Great! Breathing exercises can be a powerful tool for relaxation.")
-            with col2:
-                if st.button("I feel the same"):
-                    st.info("It's ok! Regular practice may help you feel the benefits over time.")
-            with col3:
-                if st.button("I want to try again"):
-                    st.rerun()
     
+    # After exercise is complete
+    if st.session_state.exercise_done:
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            if st.button("I feel more relaxed"):
+                st.success("Great! Breathing exercises can be a powerful tool for relaxation.")
+                st.session_state.exercise_done = False  # Reset exercise for another round
+
+        with col2:
+            if st.button("I feel the same"):
+                st.info("It's ok! Regular practice may help you feel the benefits over time.")
+                st.session_state.exercise_done = False  # Reset exercise for another round
+
+        with col3:
+            if st.button("I want to try again"):
+                st.session_state.exercise_done = False  # Reset exercise for another round
+
     # Additional information about breathing exercises
     with st.expander("About Breathing Exercises"):
         st.markdown("""
