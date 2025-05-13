@@ -16,7 +16,7 @@ except:
     NLTK_AVAILABLE = False
 
 # Gemini API key
-API_KEY = os.environ.get("GEMINI_API_KEY", "") # Enter your API key here instead of GEMINI_API_KEY
+API_KEY = os.environ.get("GEMINI_API_KEY", "AIzaSyCdSvWEKK-IKTE9NwUZfffDzGEvSO748gA") # Enter your API key here instead of GEMINI_API_KEY
 
 def setup_gemini():
     """Setup the Gemini API with the provided key"""
@@ -74,7 +74,7 @@ def analyze_sentiment(text):
     if setup_gemini():
         try:
             # Configure the model
-            model = genai.GenerativeModel('gemini-1.5-pro')
+            model = genai.GenerativeModel('gemini-2.0-flash')
             
             # Create a simpler prompt for sentiment analysis
             prompt = """Analyze the sentiment of the following text. Rate it on a scale of 1 to 5, where:
